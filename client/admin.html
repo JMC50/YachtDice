@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./dist/admin.js" defer type="module"></script>
+    <title>관리자 페이지</title>
+    <style>
+        .none{
+            display: none;
+        }
+        .room{
+            background-color: #f5f5f5;
+            border: 1px solid black;
+            margin: 10px;
+            padding: 5px 10px 5px 10px;
+            display: inline-block;
+        }
+        button{
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Page</h1>
+
+    <h2>방 목록</h2>
+    <div id="create">
+        <button id="room_create">방 만들기</button><button id="reload">리로드</button>
+        <input type="text" class="none" placeholder="방 이름을 입력해주세요." id="input">
+    </div>
+    <div id="room_con">
+
+    </div>
+</body>
+</html>

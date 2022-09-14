@@ -1,0 +1,29 @@
+{
+  "name": "yachtdice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "concurrently \"cd client&&tsc -w\" \"cd server&&tsc -w\" \"cd server&&nodemon dist/index.js --ignore *.json\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JMC50/YachtDice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JMC50/YachtDice/issues"
+  },
+  "homepage": "https://github.com/JMC50/YachtDice#readme",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "concurrently": "^7.3.0",
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.5.1"
+  }
+}
