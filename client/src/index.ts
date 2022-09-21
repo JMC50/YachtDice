@@ -1,10 +1,17 @@
-import { io, Socket } from  "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+// import { io, Socket } from  "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
-const socket:Socket = io(location.origin);
+// const socket:Socket = io(location.origin);
 
 // getimg?name=dices
-const scorecard = document.querySelector('.scorecard')
-const gameCon = document.querySelector('.gameCon')
+
+interface dice {
+    name: string;
+    num: number;
+    div: HTMLDivElement;
+}
+
+const scorecard:HTMLTableElement = document.querySelector('.scorecard')
+const gameCon:HTMLDivElement = document.querySelector('.gameCon')
 const dicePos = {
     num1: [4, 25],
     num2: [4, 72],
@@ -25,6 +32,7 @@ for(let i of values){
     const td1 = document.createElement("td");
     td1.classList.add('td1')
     td1.innerHTML = i;
+    tr.classList.add(`${i.replaceAll(" ", "_")}`);
     tr.appendChild(td1);
     const td2 = document.createElement("td");
     td2.classList.add('td2')
@@ -37,20 +45,85 @@ for(let i of values){
     scorecard.appendChild(tr);
 }
 
-const dices = ['dice1','dice2','dice3','dice4','dice5']
-for(let i of dices){
+const dices:dice[] = [];
+const temp = ['dice1','dice2','dice3','dice4','dice5'];
+
+for(let i of temp){
     const dice = document.createElement('div')
-    dice.classList.add(`${i}`, 'dice')
-    gameCon.appendChild(dice)
+    dice.classList.add(`${i}`, `dice`)
+    gameCon.appendChild(dice);
+    dices.push({
+        name: i,
+        num: 0,
+        div: dice
+    })
+
 }
 
 btn.onclick = () =>{
-    const allDice  = document.querySelectorAll('.dice')
-    console.log(allDice)
-    for(let i of allDice){
-        i.classList.remove('num1','num2','num3','num4','num5','num6')
-        const random = Math.floor(Math.random() * 6 + 1)
-        i.classList.add(`num${random}`)
+    try{
+        const divs = document.querySelectorAll(".select");
+        for(let i of divs){
+            i.remove();
+        }
+    }catch(e){}
+    for(let i of dices){
+        const random = Math.floor(Math.random() * 6) + 1;
+        i.num = random;
+        i.div.classList.value = "dice";
+        i.div.classList.add(`num${random}`);
+    }
+    check();
+}
+
+const check_numbers = () => {
+    for(let i = 0; i < 6; i++){
+        const divs = document.querySelectorAll(`.num${i+1}`);
+        console.log(divs)
+        const tr:HTMLTableRowElement = document.querySelector(`.${values[i]}`);
+        const td:HTMLTableCellElement = tr.querySelector(".td2");
+        if(!td.classList.contains("valid")){
+            const div = document.createElement("div");
+            div.classList.add("select");
+            const number = divs.length * (i + 1);
+            div.innerHTML = `${number}`;
+            if(number !== 0){
+                td.appendChild(div);
+            }
+        }
+        console.log(dices);
     }
 }
 
+scorecard.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if(target.nodeName == "DIV"){
+        if(target.classList.contains("select")){
+            const number = target.innerHTML;
+            const parent = target.parentElement;
+
+            const selects = document.querySelectorAll(".select");
+            for(let i of selects){
+                i.remove();
+            }
+
+            const div = document.createElement("div");
+            div.innerHTML = number;
+            parent.classList.add("valid");
+            parent.appendChild(div);
+        }
+    }
+})
+
+
+
+
+
+
+
+
+const check = () => {
+    //Ones 체크
+    check_numbers();
+
+}
