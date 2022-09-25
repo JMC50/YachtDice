@@ -1,6 +1,6 @@
-// import { io, Socket } from  "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+import { io, Socket } from  "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
-// const socket:Socket = io(location.origin);
+const socket:Socket = io(location.origin);
 
 // getimg?name=dices
 
@@ -22,9 +22,20 @@ const dicePos = {
 }
 
 
+
 const btn:HTMLButtonElement = document.querySelector('button')
 
 const values = ["Ones", "Twos", "Threes", "Fours", "Fives", "Sixes","Sum","BONUS","Choice", "4 of a kind", "Full House", "Little Straight", "Big Straight", "Yacht","TOTAL"];
+let game_data:any;
+
+(() => {
+    const json = {};
+    for(let i of values){
+        json[i.replaceAll(" ", "_")] = "";
+    }
+    game_data = json;
+    console.log(game_data);
+})();
 
 for(let i of values){
     const tr = document.createElement("tr");
@@ -59,6 +70,10 @@ for(let i of temp){
     })
 
 }
+
+socket.on("room", async () => {
+    console.log("room");
+})
 
 btn.onclick = () =>{
     try{
@@ -101,14 +116,17 @@ scorecard.addEventListener("click", (e) => {
         if(target.classList.contains("select")){
             const number = target.innerHTML;
             const parent = target.parentElement;
-
+            const tr = parent.parentElement;
+            
             const selects = document.querySelectorAll(".select");
             for(let i of selects){
                 i.remove();
             }
-
+            
             const div = document.createElement("div");
             div.innerHTML = number;
+            game_data[tr.classList.value] = number;
+            console.log(game_data);
             parent.classList.add("valid");
             parent.appendChild(div);
         }
