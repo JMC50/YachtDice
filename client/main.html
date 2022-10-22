@@ -7,31 +7,62 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="./dist/main.js" defer type="module"></script>
     <title>YACHT DICE</title>
+    <meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="./manifest.json">
     <style>
-        #room_con{
-            display: flex;
+        #container{
+            border: 1px solid black;
+            text-align: center;
+            padding: 50px;
         }
-        .room{
-            width: 10%;
+        .inline{
             display: inline-block;
-            background-color: #f5f5f5;
-            border-radius: 10px;
-            padding: 10px 15px 10px 15px;
-            margin: 10px;
-            transition: all 0.2s ease;
         }
-        .room:hover{
-            background-color: #dddddd;
+        #mid{
+            border: 1px solid rgb(47, 78, 255);
+            padding: 10px 20px 10px 20px;
+        }
+        .top_con{
+            display: flex;
+            justify-content: space-between;
+        }
+        .mid_con{
+            display: flex;
+            justify-content: center;
+        }
+        .bottom_con{
+            display: flex;
+            justify-content: space-between;
+        }
+        .seat{
+            border: 1px solid rgb(47, 78, 255);
+            padding: 10px 20px 10px 20px;
+            border-radius: 20px;
+        }
+        .seat:hover{
             cursor: pointer;
         }
     </style>
 </head>
 <body>
     <h1>YACHT DICE</h1>
-    <div>아래의 방 목록에서 자신의 자리에 맞는 방에 들어가주세요.</div>
+    <div>자리 선택</div>
 
-    <div id="room_con">
-
+    <div id="container">
+        <div id="mid" class="inline">칠판</div>
+        <br>
+        <br>
+        <br>
+        <div class="top_con">
+            <div class="seat">seat1</div>
+            <div class="seat">seat2</div>
+        </div>
+        <div class="mid_con">
+            <div class="seat">seat3</div>
+        </div>
+        <div class="bottom_con">
+            <div class="seat">seat4</div>
+            <div class="seat">seat5</div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,0 +1,7 @@
+{
+    "short_name": "Yacht Dice",
+    "name": "Yacht Dice",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "orientation": "landscape"
+}

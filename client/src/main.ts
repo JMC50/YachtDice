@@ -1,28 +1,13 @@
-import { io, Socket } from  "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
-// import { io, Socket } from "socket.io-client"
+const container = <HTMLDivElement>document.querySelector("#container");
 
-interface room {
-    name: string;
-    people: number;
-}
+container.addEventListener("click", e => {
+    const target = <HTMLElement>e.target;
+    if(target.nodeName == "DIV"){
+        if(!target.classList.contains("seat")) return;
 
-const socket:Socket = io(location.origin);
-
-const getrooms = async () => {
-    const rooms = <HTMLDivElement>document.getElementById("room_con");
-    rooms.innerHTML = "";
-
-    const res = await fetch("/getrooms");
-    const data:room[] = await res.json();
-
-    for(let i of data){
-        const div = document.createElement("div");
-        div.innerHTML = `${i.name}<br>${i.people}명 참가중`;
-        div.classList.add("room");
-        rooms.appendChild(div);
+        const a = document.createElement("a");
+        const url = location.href.split("/client")[0];
+        a.href = url + `/mainpage?seat=${target.innerHTML}`;
+        a.click();
     }
-}
-
-socket.on("room", async () => {
-    await getrooms();
 })
